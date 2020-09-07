@@ -5,14 +5,16 @@
 -on_load(init/0).
 
 init() ->
-    SoName = case code:priv_dir(?MODULE) of
+    SoName = case code:priv_dir(erlpixels) of
         {error, bad_name} ->
-            Ebin = filename:dirname(?MODULE),
-            App = filename:dirname(Ebin),
-            Priv = filename:join(App, "priv"),
-            filename:join(Priv, ?MODULE);
+            case filelib:is_dir(filename:join(["..", priv])) of
+                true ->
+                    filename:join(["..", priv, ?MODULE]);
+                _ ->
+                    filename:join([priv, ?MODULE])
+            end;
         Dir ->
-         filename:join(Dir, ?MODULE)
+            filename:join(Dir, ?MODULE)
     end,
     ok = erlang:load_nif(SoName, 0).
 
