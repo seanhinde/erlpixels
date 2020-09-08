@@ -27,3 +27,24 @@ test_dot(Type, Filename) ->
     ?assert( R1 < 10 ),
     ?assert( G1 < 10) ,
     ?assert( B1 < 10).
+
+read_png_file_separate_alpha_test() ->
+    test_separate_dot(png, "test/images/dot.png").
+
+test_separate_dot(Type, Filename) ->
+   {Type, {8, 8, Data, Alpha}} = erlpixels:read_file(Filename, [separate_alpha]),
+
+    ?assertMatch( 3 * 8 * 8, erlang:byte_size(Data)),
+
+    ?assertMatch( 8 * 8, erlang:byte_size(Alpha)),
+
+    <<R1, G1, B1, R2, G2, B2, _/binary>> = Data,
+    ?assert( R1 < 10 ),
+    ?assert( G1 < 10) ,
+    ?assert( B1 < 10),
+
+    ?assert( R2 < 10 ),
+    ?assert( G2 < 10) ,
+    ?assert( B2 < 10),
+
+     <<255,255, _/binary>> = Alpha.

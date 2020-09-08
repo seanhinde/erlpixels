@@ -1,6 +1,6 @@
 -module(erlpixels_nif).
 
--export([init/0, decode_png/1, decode_jpeg/1]).
+-export([init/0, decode_png/2, decode_jpeg/2]).
 
 -on_load(init/0).
 
@@ -18,8 +18,8 @@ init() ->
     end,
     ok = erlang:load_nif(SoName, 0).
 
-decode_png(_Data) ->
-    erlang:nif_error("NIF decode_png/1 not implemented").
+decode_png(_Data, _Opts) ->
+    erlang:nif_error("NIF decode_png/2 not implemented").
 
-decode_jpeg(_Data) ->
-    erlang:nif_error("NIF decode_jpeg/1 not implemented").
+decode_jpeg(_Data, _Opts) ->
+    erlang:nif_error("NIF decode_jpeg/2 not implemented").
