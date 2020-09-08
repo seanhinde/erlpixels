@@ -41,7 +41,7 @@ encode_opts(Opts) ->
 
 encode_opt(separate_alpha, OptVal) ->
     OptVal bor ?SEPARATE_ALPHA;
-encode_opt(separate_alpha, OptVal) ->
+encode_opt(_, OptVal) ->
     OptVal.
 
 process_result(_Type, {error, Reason}) ->  {error, Reason};
